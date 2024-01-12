@@ -10,8 +10,17 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     description: {
       type: String,
+    },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      require: true,
+      ref: "User",
     },
   },
   { collection: "products" }

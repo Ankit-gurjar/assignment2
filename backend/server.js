@@ -3,13 +3,16 @@ const dotenv = require("dotenv");
 const path = require("path");
 const ConnectDB = require("./config/dbconnect");
 const compression = require("compression");
-const { userRoute } = require("./routes/userroute");
+const userRoute = require("./routes/userroute");
+const orderRoute = require("./routes/orderroute");
+const productRouter = require("./routes/productrouter");
 const { notfound, errorHandler } = require("./middleware/errormiddleware");
 
 const app = express();
 
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 🚩 Shutting down...");
+  console.log(err.stack);
   process.exit(1);
 });
 
@@ -28,6 +31,8 @@ app.get("/", (req, res) => {
 /*-----------APIS-----------*/
 
 app.use("/api/auth", userRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/product", productRouter);
 
 app.use(notfound);
 app.use(errorHandler);
